@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Services;
+using Infrastructure.Services.Shop;
 
 namespace Infrastructure.States
 {
@@ -34,6 +35,8 @@ namespace Infrastructure.States
         
         private void RegisterServices()
         {
+            _services.RegisterSingle<IShopItemService>(new ShopItemService());
+            _services.Single<IShopItemService>().Init();
         }
     }
 }
