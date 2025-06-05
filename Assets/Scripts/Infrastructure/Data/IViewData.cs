@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Data
 {
-    public class ViewData : IViewData
+    public interface IViewData
     {
         
     }
