@@ -1,7 +1,13 @@
-﻿namespace StaticData
+﻿using UnityEngine;
+
+namespace StaticData
 {
-    public class ShopItemData
+    [CreateAssetMenu(fileName = "ShopItem", menuName = "Shop/Item", order = 0)]
+    public class ShopItemData : ScriptableObject
     {
-        
+        public string itemName;
+        public Sprite icon;
+        [TextArea] public string description;
+        public int price;
     }
 }
