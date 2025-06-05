@@ -46,30 +46,11 @@ public class ViewManager : MonoBehaviour
     
     public void RemoveView(BaseView view)
     {
-        List<string> viewsToDelete = new List<string>();
-        foreach (var item in _viewCache)
-        {
-            if (item.Value == view)
-            {
-                viewsToDelete.Add(item.Key);
-            }
-        }
-
-        foreach (var item in viewsToDelete)
-        {
-            _viewCache.Remove(item);
-        }
-        
         Destroy(view.gameObject);
     }
         
     private BaseView CreateView(string viewId)
     {
-        if (!_viewCache.ContainsKey(viewId))
-        {
-            throw new Exception("Can't find view with such id " + viewId);
-        }
-
         var view = Instantiate(ResourcesCache.GetViewById(viewId), _canvas, false);
         view.name = viewId;
         view.gameObject.SetActive(true);

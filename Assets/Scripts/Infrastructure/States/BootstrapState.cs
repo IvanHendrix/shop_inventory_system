@@ -15,10 +15,9 @@ namespace Infrastructure.States
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
-            
             RegisterServices();
         }
-        
+
         public void Enter()
         {
             EnterLoadLevel();
@@ -27,12 +26,12 @@ namespace Infrastructure.States
         public void Exit()
         {
         }
-        
+
         private void EnterLoadLevel()
         {
             _stateMachine.Enter<LoadLevelState>();
         }
-        
+
         private void RegisterServices()
         {
             _services.RegisterSingle<IShopItemService>(new ShopItemService());
