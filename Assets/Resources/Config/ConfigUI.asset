@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc3cd085fe7c4a1a80656d3e7859e33e, type: 3}
   m_Name: ConfigUI
   m_EditorClassIdentifier: 
-  _views: []
+  _views:
+  - Id: 
+    View: {fileID: 0}
+  - Id: 
+    View: {fileID: 0}
   _pathToAssets: 
