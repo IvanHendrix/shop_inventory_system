@@ -1,14 +1,16 @@
-﻿using Infrastructure;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameRunner : MonoBehaviour, ICoroutineRunner
+namespace Infrastructure
 {
-    private Game _game;
-    
-    private void Awake()
+    public class GameRunner : MonoBehaviour, ICoroutineRunner
     {
-        _game = new Game(this);
+        private Game _game;
+    
+        private void Awake()
+        {
+            _game = new Game(this);
         
-        DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
+        }
     }
 }

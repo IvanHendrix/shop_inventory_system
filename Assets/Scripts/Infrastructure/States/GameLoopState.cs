@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.States
 {
-    public class LoadProgressState : IState
+    public class GameLoopState : IState
     {
         public void Enter()
         {

@@ -4,8 +4,7 @@ namespace Infrastructure.States
 {
     public class BootstrapState : IState
     {
-        private const string InitialSceneName = "Initial";
-    
+
         private readonly GameStateMachine _stateMachine;
         private SceneLoader _sceneLoader;
         private AllServices _services;
@@ -21,7 +20,7 @@ namespace Infrastructure.States
         
         public void Enter()
         {
-            _sceneLoader.Load(InitialSceneName, EnterLoadLevel);
+            EnterLoadLevel();
         }
 
         public void Exit()
@@ -30,7 +29,7 @@ namespace Infrastructure.States
         
         private void EnterLoadLevel()
         {
-            _stateMachine.Enter<LoadProgressState>();
+            _stateMachine.Enter<LoadLevelState>();
         }
         
         private void RegisterServices()
