@@ -53,7 +53,7 @@ namespace UI.Shop
 
         private void OnBuyItemClick(ShopItemDataView data)
         {
-            
+            OnBuyClicked?.Invoke(data);
         }
 
         private void OnSetDescriptionText(string description)
