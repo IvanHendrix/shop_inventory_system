@@ -17,6 +17,8 @@ namespace Infrastructure.States
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
                 [typeof(GameLoopState)] = new GameLoopState(),
             };
+            
+            Enter<BootstrapState>();
         }
 
         public void Enter<TState>() where TState : class, IState

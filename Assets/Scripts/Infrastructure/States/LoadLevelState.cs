@@ -4,20 +4,20 @@ namespace Infrastructure.States
 {
     public class LoadLevelState : IState
     {
-        private readonly GameStateMachine _gameStateMachine;
+        private const string NextScene = "Main";
 
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
         {
-            _gameStateMachine = gameStateMachine;
+            _stateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
         }
         
         public void Enter()
         {
-            _sceneLoader.Load("Main", OnLoaded);
+            _sceneLoader.Load(NextScene, OnLoaded);
         }
 
         public void Exit()
