@@ -1,20 +1,24 @@
 ﻿using Infrastructure.Services;
+using Infrastructure.Services.Currency;
 using Infrastructure.Services.Shop;
+using StaticData;
+using UnityEngine;
 
 namespace Infrastructure.States
 {
     public class BootstrapState : IState
     {
+        private const string ConfigsCurrencyPath = "Configs/CurrencyConfig";
 
         private readonly GameStateMachine _stateMachine;
-        private SceneLoader _sceneLoader;
+
         private AllServices _services;
         
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(GameStateMachine stateMachine, AllServices services)
         {
             _stateMachine = stateMachine;
-            _sceneLoader = sceneLoader;
             _services = services;
+            
             RegisterServices();
         }
 
@@ -36,6 +40,9 @@ namespace Infrastructure.States
         {
             _services.RegisterSingle<IShopItemService>(new ShopItemService());
             _services.Single<IShopItemService>().Init();
+            
+            CurrencyConfig config = Resources.Load<CurrencyConfig>(ConfigsCurrencyPath);
+            _services.RegisterSingle<ICurrencyService>(new CurrencyService(config));
         }
     }
 }
