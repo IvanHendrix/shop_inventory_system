@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
+using UI.Popup;
 using UI.Shop.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,12 +20,16 @@ namespace UI.Shop
         [SerializeField] private Button _navigatedButton;
         [SerializeField] private TextMeshProUGUI _goldText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
+        [SerializeField] private PopupView _popupView;
 
         private List<ShopItemUI> _items = new List<ShopItemUI>();
 
         private void Start()
         {
             _navigatedButton.onClick.AddListener(OnGoToInventoryClick);
+            
+            _popupView.SetPopupText("Not enough money");
+            _popupView.OnClick += OnPopupButtonClick;
         }
 
         protected override void OnContextUpdate(ShopViewData context)
@@ -41,7 +46,7 @@ namespace UI.Shop
 
         public void ShowPopupMessage()
         {
-            Debug.LogError("Not enough money");
+            SetVisiblePopup(true);
         }
 
         public void UpdateGoldDisplay(int gold)
@@ -49,7 +54,17 @@ namespace UI.Shop
             _goldText.text = $"Gold: ${gold}";
         }
 
-        public void Clear()
+        private void OnPopupButtonClick()
+        {
+            SetVisiblePopup(false);
+        }
+
+        private void SetVisiblePopup(bool visible)
+        {
+            _popupView.gameObject.SetActive(visible);
+        }
+
+        private void Clear()
         {
             foreach (ShopItemUI item in _items)
             {
@@ -67,6 +82,8 @@ namespace UI.Shop
         {
             Clear();
             
+            SetVisiblePopup(false);
+            
             foreach (var viewData in views)
             {
                 var item = Instantiate(_itemUIPrefab, _itemContainer);
@@ -80,6 +97,7 @@ namespace UI.Shop
 
         private void OnGoToInventoryClick()
         {
+            _descriptionText.text = string.Empty;
             OnSwitchToInventoryClicked?.Invoke();
         }
 
