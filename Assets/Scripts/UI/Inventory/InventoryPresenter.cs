@@ -14,7 +14,7 @@ namespace UI.Inventory
 
         private readonly IInventoryService _inventoryService;
         private readonly ICurrencyService _currencyService;
-        
+
         public event Action OnBackToShopRequested;
 
         public InventoryPresenter(IInventoryService inventoryService, ICurrencyService currencyService)
@@ -26,19 +26,22 @@ namespace UI.Inventory
         protected override void OnStart()
         {
             base.OnStart();
-            
+
             View.OnBackToShopClicked += HandleBackClicked;
-            
+
             _inventoryService.OnInventoryChanged += Refresh;
-            
+
             _currencyService.OnGoldChanged += OnUpdateGold;
-            
+
             Refresh();
         }
 
         private void Refresh()
         {
-            List<InventoryItemData> items = _inventoryService.GetInventory();
+            List<InventoryItemData> items = _inventoryService.GetInventory()
+                .OrderByDescending(i => i.itemName)
+                .ToList();
+
             InventoryViewData viewData = new InventoryViewData(
                 items.Select(i => new InventoryItemDataView
                 {
@@ -49,12 +52,12 @@ namespace UI.Inventory
 
             View.SetContext(viewData);
         }
-        
+
         private void OnUpdateGold(int gold)
         {
             View.UpdateGoldDisplay(gold);
         }
-        
+
         private void HandleBackClicked()
         {
             OnBackToShopRequested?.Invoke();
@@ -63,11 +66,11 @@ namespace UI.Inventory
         protected override void OnFinish()
         {
             base.OnFinish();
-            
+
             View.OnBackToShopClicked -= HandleBackClicked;
-            
-            _inventoryService.OnInventoryChanged -= Refresh;  
-            
+
+            _inventoryService.OnInventoryChanged -= Refresh;
+
             _currencyService.OnGoldChanged -= OnUpdateGold;
         }
     }

@@ -44,7 +44,9 @@ namespace UI.Shop
 
         private void LoadShopItems()
         {
-            List<ShopItemData> shopItems = _itemService.GetAllItems();
+            List<ShopItemData> shopItems = _itemService.GetAllItems()
+                .OrderByDescending(i => i.itemName)
+                .ToList();;
 
             List<ShopItemDataView> viewModels = shopItems
                 .Select(i => new ShopItemDataView
