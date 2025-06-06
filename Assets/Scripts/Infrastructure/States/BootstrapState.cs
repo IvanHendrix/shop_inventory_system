@@ -1,5 +1,7 @@
-﻿using Infrastructure.Services;
+﻿using System.ComponentModel.Design;
+using Infrastructure.Services;
 using Infrastructure.Services.Currency;
+using Infrastructure.Services.Inventory;
 using Infrastructure.Services.Shop;
 using StaticData;
 using UnityEngine;
@@ -43,6 +45,8 @@ namespace Infrastructure.States
             
             CurrencyConfig config = Resources.Load<CurrencyConfig>(ConfigsCurrencyPath);
             _services.RegisterSingle<ICurrencyService>(new CurrencyService(config));
+            
+            _services.RegisterSingle<IInventoryService>(new SimpleInventoryService());
         }
     }
 }
