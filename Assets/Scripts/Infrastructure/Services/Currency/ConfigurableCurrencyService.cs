@@ -10,6 +10,7 @@ namespace Infrastructure.Services.Currency
         void TrySpend(int amount);
         void AddGold(int amount);
         bool CanAfford(int amount);
+        int GetCurrentGold();
     }
 
     public class CurrencyService : ICurrencyService
@@ -24,6 +25,11 @@ namespace Infrastructure.Services.Currency
             _gold = config.startingGold;
         }
 
+        public int GetCurrentGold()
+        {
+            return _gold;
+        }
+        
         public void TrySpend(int amount)
         {
             if (!CanAfford(amount))

@@ -4,17 +4,19 @@ using Infrastructure;
 using TMPro;
 using UI.Shop.Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Shop
 {
     public class ShopView : BaseView<ShopViewData>
     {
         public event Action<ShopItemDataView> OnBuyClicked;
-        
+
         [SerializeField] private Transform _itemContainer;
         [SerializeField] private ShopItemUI _itemUIPrefab;
         
         [Space]
+        [SerializeField] private Button _navigatedButton;
         [SerializeField] private TextMeshProUGUI _goldText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
@@ -79,6 +81,10 @@ namespace UI.Shop
         private void OnDestroy()
         {
             Clear();
+        }
+
+        public void ShowPopupMessage()
+        {
         }
     }
 }

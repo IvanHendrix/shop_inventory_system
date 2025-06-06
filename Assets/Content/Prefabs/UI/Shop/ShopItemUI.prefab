@@ -140,6 +140,7 @@ MonoBehaviour:
   _nameText: {fileID: 3873041110207629023}
   _priceText: {fileID: 257053158894449534}
   _buyButton: {fileID: 5313322183190686659}
+  _descriptionButton: {fileID: 5334842924303597166}
 --- !u!1 &1294341233505244829
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.77494085, b: 0.53396225, a: 1}
+  m_Color: {r: 0.9547169, g: 0.551774, b: 0.11348517, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
