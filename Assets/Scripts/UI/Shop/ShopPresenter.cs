@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Services.Currency;
 using Infrastructure.Services.Shop;
 using StaticData;
 using UI.Shop.Data;
+using UnityEngine;
 
 namespace UI.Shop
 {
@@ -11,9 +13,12 @@ namespace UI.Shop
     {
         protected override string ViewId => "ShopView";
         
+        public event Action<ShopItemDataView> OnItemPurchased;
+        public event Action OnSwitchToInventory;
+
         private readonly IShopItemService _itemService;
         private readonly ICurrencyService _currencyService;
-        
+
         public ShopPresenter(IShopItemService itemService, ICurrencyService currencyService)
         {
             _itemService = itemService;
@@ -23,23 +28,18 @@ namespace UI.Shop
         protected override void OnStart()
         {
             base.OnStart();
-
+            
             View.OnBuyClicked += HandleBuyClicked;
-            
+            View.OnSwitchToInventoryClicked += HandleSwitchToInventory;
+
             _currencyService.OnGoldChanged += OnUpdateGold;
-            _currencyService.OnRefusedPurchase += OnShowPopupMessage;
-            
+
             LoadShopItems();
         }
 
-        private void OnShowPopupMessage()
+        private void OnUpdateGold(int gold)
         {
-            View.ShowPopupMessage();
-        }
-
-        private void OnUpdateGold(int obj)
-        {
-            View.UpdateGoldDisplay(_currencyService.GetCurrentGold());
+            View.UpdateGoldDisplay(gold);
         }
 
         private void LoadShopItems()
@@ -64,17 +64,32 @@ namespace UI.Shop
 
         private void HandleBuyClicked(ShopItemDataView dataView)
         {
+            bool success = _currencyService.CanAfford(dataView.Price);
+
+            if (!success)
+            {
+                View.ShowPopupMessage();
+                return;
+            }
+            
             _currencyService.TrySpend(dataView.Price);
+            
+            OnItemPurchased?.Invoke(dataView);
+        }
+
+        private void HandleSwitchToInventory()
+        {
+            OnSwitchToInventory?.Invoke();
         }
 
         protected override void OnFinish()
         {
             base.OnFinish();
-            
+
             View.OnBuyClicked -= HandleBuyClicked;
-            
+            View.OnSwitchToInventoryClicked -= HandleSwitchToInventory;
+
             _currencyService.OnGoldChanged -= OnUpdateGold;
-            _currencyService.OnRefusedPurchase -= OnShowPopupMessage;
         }
     }
 }

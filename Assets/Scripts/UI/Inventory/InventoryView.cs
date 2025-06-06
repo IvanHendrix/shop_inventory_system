@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UI.Inventory.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace UI.Inventory
         [SerializeField] private Transform _itemContainer;
         [SerializeField] private InventoryItemUI _itemUIPrefab;
         [SerializeField] private Button _backButton;
+        [SerializeField] private TextMeshProUGUI _goldText;
         
         private  List<InventoryItemUI> _activeItems = new();
         private  Stack<InventoryItemUI> _pooledItems = new();
@@ -25,9 +27,15 @@ namespace UI.Inventory
         protected override void OnContextUpdate(InventoryViewData context)
         {
             base.OnContextUpdate(context);
+            
             UpdateView(Data.Items);
         }
 
+        public void UpdateGoldDisplay(int gold)
+        {
+            _goldText.text = $"Gold: ${gold}";
+        }
+        
         private void UpdateView(List<InventoryItemDataView> items)
         {
             foreach (InventoryItemUI item in _activeItems)
@@ -35,6 +43,7 @@ namespace UI.Inventory
                 item.gameObject.SetActive(false);
                 _pooledItems.Push(item);
             }
+            
             _activeItems.Clear();
             
             foreach (InventoryItemDataView data in items)

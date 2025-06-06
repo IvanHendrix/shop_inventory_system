@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Infrastructure.Services.Inventory.Data;
-using StaticData;
+using UI.Shop.Data;
 
 namespace Infrastructure.Services.Inventory
 {
     public interface IInventoryService : IService
     {
         event Action OnInventoryChanged;
-        void Add(ShopItemData item);
+        void Add(ShopItemDataView item);
         List<InventoryItemData> GetInventory();
     }
 
@@ -19,18 +19,18 @@ namespace Infrastructure.Services.Inventory
         
         private readonly Dictionary<string, InventoryItemData> _items = new();
 
-        public void Add(ShopItemData item)
+        public void Add(ShopItemDataView item)
         {
-            if (_items.TryGetValue(item.itemName, out var existing))
+            if (_items.TryGetValue(item.ItemName, out var existing))
             {
                 existing.quantity++;
             }
             else
             {
-                _items[item.itemName] = new InventoryItemData
+                _items[item.ItemName] = new InventoryItemData
                 {
-                    itemName = item.itemName,
-                    icon = item.icon,
+                    itemName = item.ItemName,
+                    icon = item.Icon,
                     quantity = 1
                 };
             }
