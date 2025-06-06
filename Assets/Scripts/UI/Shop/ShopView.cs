@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Infrastructure;
 using TMPro;
 using UI.Shop.Data;
 using UnityEngine;
 
 namespace UI.Shop
 {
-    public class ShopView : MonoBehaviour
+    public class ShopView : BaseView<ShopViewData>
     {
         public event Action<ShopItemDataView> OnBuyClicked;
         
@@ -19,7 +20,19 @@ namespace UI.Shop
 
         private List<ShopItemUI> _items = new List<ShopItemUI>();
 
-        public void UpdateView(List<ShopItemDataView> views)
+        protected override void OnContextUpdate(ShopViewData context)
+        {
+            base.OnContextUpdate(context);
+
+            if (Data.ShopItemDataViews == null || Data.ShopItemDataViews.Count == 0)
+            {
+                return;
+            }
+            
+            UpdateView(Data.ShopItemDataViews);
+        }
+
+        private void UpdateView(List<ShopItemDataView> views)
         {
             Clear();
             
@@ -44,6 +57,8 @@ namespace UI.Shop
             }
             
             _items.Clear();
+
+            _descriptionText.text = string.Empty;
         }
 
         public void UpdateGoldDisplay(int gold)
