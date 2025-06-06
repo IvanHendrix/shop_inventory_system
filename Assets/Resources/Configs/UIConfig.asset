@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: UIConfig
   m_EditorClassIdentifier: 
   _views:
+  - Id: InventoryView
+    View: {fileID: 5226254031709081707, guid: 18eec2fa3456a874a8bb7cb912a6cf1f, type: 3}
   - Id: ShopView
     View: {fileID: 897542741988890129, guid: 26170bea5ca5aa24eb28798979badd22, type: 3}
   _pathToAssets: Assets/Content/Prefabs/UI/Views
